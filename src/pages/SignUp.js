@@ -26,12 +26,18 @@ const SignUpForm = ({ navigate }) => {
     return (
     <>
       <body>
-        <form onSubmit={handleSubmit}>
-        <input placeholder="Full Name" id="name" type='text' value={ name } onChange={handleNameChange}/>
-        <input placeholder="Email" id="email" type='text' value={ email } onChange={handleEmailChange}/>
-        <input placeholder="Password" id="password" type='password' value={ password } onChange={handlePasswordChange}/>
-        <input id='submit' type="submit" value="Submit"/> 
-        </form>
+        <div className="content">
+          <h2 className='title'>  Welcome to CPA FC! </h2>
+          <div> Already have an account? </div>
+          <a href="../login">login here</a>
+         
+          <form onSubmit={handleSubmit}>
+          <input placeholder="Full Name" id="name" type='text' value={ name } onChange={handleNameChange}/>
+          <input placeholder="Email" id="email" type='text' value={ email } onChange={handleEmailChange}/>
+          <input placeholder="Password" id="password" type='password' value={ password } onChange={handlePasswordChange}/>
+          <input id='submit' type="submit" value="Submit"/> 
+          </form>
+        </div>
       </body>  
     </>
     )
