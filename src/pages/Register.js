@@ -3,16 +3,16 @@ import React, { useState } from 'react';
 const Register = ({ navigate }) => {
 
   const [name, setName] = useState("");
-  const [age, setAge] = useState("");
+  const [dob, setDob] = useState("");
   const [address, setAddress] = useState("");
   const [group, setGroup] = useState("");
   const [registered, setRegistered] = useState(false);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(`${name}, ${age}, ${address}, ${group}`)
+    console.log(`${name}, ${dob}, ${address}, ${group}`)
     setName("")
-    setAge("")
+    setDob("")
     setAddress("")
     setGroup("")
     setRegistered(true)
@@ -23,6 +23,10 @@ const Register = ({ navigate }) => {
     setRegistered(false)
   }
 
+  const showAge = (dob) => {
+    
+  }
+
   const redirectHome = () => {
     navigate('/home')
   }
@@ -31,8 +35,8 @@ const Register = ({ navigate }) => {
     setName(event.target.value)
   }
 
-  const handleAgeChange = (event) => {
-    setAge(event.target.value)
+  const handleDobChange = (event) => {
+    setDob(event.target.value)
   }
 
   const handleAddressChange = (event) => {
@@ -48,7 +52,7 @@ const Register = ({ navigate }) => {
       <body>
         <form onSubmit={handleSubmit}>
           <input placeholder="Name" id="name" type='text' value={ name } onChange={handleNameChange}/>
-          <input placeholder="Age" id="age" type='text' pattern='[0-9]*' value={ age } onChange={handleAgeChange}/>
+          <input placeholder="DOB" id="dob" type='date' value={ dob } onChange={handleDobChange}/>
           <input placeholder="Address" id="address" type='text' value={ address } onChange={handleAddressChange}/>
           <input placeholder="Group" id="group" type='text' list ='groups' value={ group } onChange={handleGroupChange}/>
           <datalist id='groups'> 
@@ -64,6 +68,9 @@ const Register = ({ navigate }) => {
           <button onClick={hideConfirmation}> Register another child </button>
           <button onClick={redirectHome}> Go to the homepage! </button>
         </div>}
+        <div>
+          <a> Your registered children: </a>
+        </div>
       </body> 
     </>
   )
