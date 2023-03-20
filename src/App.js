@@ -10,6 +10,7 @@ function App() {
     <Routes>
       <Route path='/signup' element={<SignUp navigate={ useNavigate() }/>}/> 
       <Route path='/login' element={<Login navigate={ useNavigate() }/>}/> 
+      <Route path='/home' element={<Home navigate={ useNavigate() }/>}/> 
     </Routes>
   );
 }
