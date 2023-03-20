@@ -11,12 +11,12 @@ const Register = ({ navigate }) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     console.log(`${name}, ${dob}, ${address}, ${group}`)
+    console.log(showAge(dob))
     setName("")
     setDob("")
     setAddress("")
     setGroup("")
     setRegistered(true)
-    console.log(registered)
   }
 
   const hideConfirmation = () => {
@@ -24,7 +24,11 @@ const Register = ({ navigate }) => {
   }
 
   const showAge = (dob) => {
-    
+    const dobDate = new Date(dob)
+    const difference = Date.now() - dobDate
+    const date = new Date(difference)
+    const age = date.getFullYear() - 1970
+    return age 
   }
 
   const redirectHome = () => {
