@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 const Fixtures = ({ navigate }) => {
 
+  const [group, setGroup] = useState("");
   const [opponent, setOpponent] = useState("");
   const [venue, setVenue] = useState("");
   const [date, setDate] = useState("");
@@ -9,6 +10,7 @@ const Fixtures = ({ navigate }) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     console.log(`${opponent}, ${venue}, ${date}`)
+    setGroup("")
     setOpponent("")
     setVenue("")
     setDate("")
@@ -34,6 +36,10 @@ const Fixtures = ({ navigate }) => {
     );
   };
 
+  const handleGroupChange = (event) => {
+    setGroup(event.target.value)
+  }
+
   const handleOpponentChange = (event) => {
     setOpponent(event.target.value)
   }
@@ -54,6 +60,13 @@ const Fixtures = ({ navigate }) => {
          
           <form onSubmit={handleSubmit}>
             <h3> Add a new fixture! </h3>
+            <input placeholder="Group" id="group" type='text' list ='groups' value={ group } onChange={handleGroupChange}/>
+              <datalist id='groups'> 
+              <option value="Shaz's U9s" />
+              <option value="Michael's U10s" />
+              <option value="Shah's U10s" />
+              <option value="Rob's U12s" />
+              </datalist>
             <input placeholder="Opponent" id="opponent" type='text' value={ opponent } onChange={handleOpponentChange}/>
             <input placeholder="Venue" id="venue" type='text' value={ venue } onChange={handleVenueChange}/>
             <input placeholder="Date" id="date" type='date' value={ date } onChange={handleDateChange}/>
@@ -62,6 +75,7 @@ const Fixtures = ({ navigate }) => {
         </div>
         <div>
         <span style={{ fontWeight: 'bold' }}>Your next fixture:</span>
+          <p> Group: </p>
           <p> Opponent: </p>
           <p> Venue: </p>
           <p> Date: </p>
@@ -69,8 +83,11 @@ const Fixtures = ({ navigate }) => {
             <Checkbox label='Confirm for ' checked={false} />
           </div>
         </div>
+        <div>
+        <span style={{ fontWeight: 'bold' }}>Results:</span>
+        </div>
       </body>  
-    </>
+  </>
     )
 }
 

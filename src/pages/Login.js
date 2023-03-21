@@ -21,6 +21,7 @@ const LoginForm = ({ navigate }) => {
     return (
     <>
       <body>
+        <h3> Login Page </h3>
         <form onSubmit={handleSubmit}>
         <input placeholder="Email" id="email" type='text' value={ email } onChange={handleEmailChange}/>
         <input placeholder="Password" id="password" type='password' value={ password } onChange={handlePasswordChange}/>
