@@ -6,6 +6,7 @@ import SignUp from './pages/SignUp'
 import Login from './pages/Login'
 import Home from './pages/Home'
 import Register from './pages/Register'
+import Fixtures from './pages/Fixtures'
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
       <Route path='/login' element={<Login navigate={ useNavigate() }/>}/> 
       <Route path='/home' element={<Home navigate={ useNavigate() }/>}/> 
       <Route path='/register' element={<Register navigate={ useNavigate() }/>}/> 
+      <Route path='/fixtures' element={<Fixtures navigate={ useNavigate() }/>}/> 
     </Routes>
   );
 }
