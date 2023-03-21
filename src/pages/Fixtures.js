@@ -14,14 +14,20 @@ const Fixtures = ({ navigate }) => {
     setDate("")
   }
 
-  const Checkbox = ({ label }) => {
+  const Checkbox = ({ label, checked }) => {
 
-    const [isChecked, setIsChecked] = useState(false);
+    const defaultChecked = checked ? checked : false 
+    const [isChecked, setIsChecked] = useState(defaultChecked);
+
+    const handleAvailabilityChange = () => {
+      setIsChecked((prev) => !prev)
+      // this will add confirmed child to database
+    }
 
     return (
       <div>
         <label>
-          <input type="checkbox" checked={isChecked} />
+          <input type="checkbox" checked={isChecked} onChange={handleAvailabilityChange}/>
           <span>{label}</span>
         </label>
       </div>
@@ -60,7 +66,7 @@ const Fixtures = ({ navigate }) => {
           <p> Venue: </p>
           <p> Date: </p>
           <div>
-            <Checkbox label='Confirm for ' checked={true} />
+            <Checkbox label='Confirm for ' checked={false} />
           </div>
         </div>
       </body>  
