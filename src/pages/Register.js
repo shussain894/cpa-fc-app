@@ -1,24 +1,45 @@
 import React, { useState } from 'react';
 
-const Register = ({ navigate }) => {
+const Register = ({ navigate, token, setToken }) => {
 
   const [name, setName] = useState("");
   const [dob, setDob] = useState("");
   const [address, setAddress] = useState("");
   const [group, setGroup] = useState("");
   const [registered, setRegistered] = useState(false);
+  const [children, setChildren] = useState([]);
+  const user_id = window.localStorage.getItem('user_id')
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     console.log(`${name}, ${dob}, ${address}, ${group}`)
     console.log(showAge(dob))
+
+    fetch(`http://localhost:4000/users/${user_id}`, {
+      method: 'patch',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify({ name: name, dob: dob, address: address, group: group })
+    })
+
+    let data = await response.json()
+
+      if (response.status !== 201) {
+        console.log("child NOT added");
+    } else {
+        console.log("child added");
+        window.localStorage.setItem("token", data.token);
+        setToken(window.localStorage.getItem("token"));
+        setChildren(oldArray=>[...oldArray, data.child])
+      }
+
     setName("")
     setDob("")
     setAddress("")
     setGroup("")
     setRegistered(true)
-
-    
   }
 
   const hideConfirmation = () => {
