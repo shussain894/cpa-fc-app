@@ -11,7 +11,7 @@ import Fixtures from './pages/Fixtures'
 function App() {
   return (
     <Routes>
-      <Route path='/signup' element={<SignUp navigate={ useNavigate() }/>}/> 
+      <Route path='/' element={<SignUp navigate={ useNavigate() }/>}/> 
       <Route path='/login' element={<Login navigate={ useNavigate() }/>}/> 
       <Route path='/home' element={<Home navigate={ useNavigate() }/>}/> 
       <Route path='/register' element={<Register navigate={ useNavigate() }/>}/> 

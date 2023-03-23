@@ -4,10 +4,36 @@ const LoginForm = ({ navigate }) => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [UserDoesntExistsErrorMessage, setUserDoesntExistsErrorMessage] = useState('');
+  const [EmptyFieldErrorMessage, setEmptyFieldErrorMessage] = useState('')
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     console.log(`${email}, ${password}`)
+
+    let response = await fetch('http://localhost:4000/tokens', {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email: email, password: password })
+    })
+
+    if (email === '' || password === ''){
+      console.log('empty field')
+      navigate('/login')
+      setEmptyFieldErrorMessage('Please enter both your password and email')
+    } else if (response.status !== 201) {
+      console.log("oops")
+      navigate('/login')
+      setUserDoesntExistsErrorMessage('This user is not registered - please signup first')
+    } else{
+      console.log("yay")
+      let data = await response.json()
+      window.localStorage.setItem("token", data.token)
+      window.localStorage.setItem("user_id", data.user_id)
+      navigate('/home');
+    }
   }
 
   const handleEmailChange = (event) => {

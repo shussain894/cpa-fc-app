@@ -17,6 +17,8 @@ const Register = ({ navigate }) => {
     setAddress("")
     setGroup("")
     setRegistered(true)
+
+    
   }
 
   const hideConfirmation = () => {

@@ -9,6 +9,19 @@ const SignUpForm = ({ navigate }) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     console.log(`${name}, ${email}, ${password}`)
+
+    fetch('http://localhost:4000/users', {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email: email, password: password, name: name })
+    })
+    .then(response => {
+      if(response.status === 201) {
+        console.log(response.body)
+        navigate('/login')
+      }})
   }
 
   const handleEmailChange = (event) => {
