@@ -15,8 +15,8 @@ const Register = ({ navigate, token, setToken }) => {
     console.log(`${name}, ${dob}, ${address}, ${group}`)
     console.log(showAge(dob))
 
-    fetch(`http://localhost:4000/users/${user_id}`, {
-      method: 'patch',
+    fetch(`/users/${user_id}`, {
+      method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*',
