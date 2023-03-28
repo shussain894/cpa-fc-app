@@ -15,6 +15,7 @@ const Register = ({ navigate }) => {
   const [registered, setRegistered] = useState(false);
   const [children, setChildren] = useState([]);
   const [user, setUser] = useState({});
+  const [numberError, setNumberError] = useState("");
   const user_id = window.localStorage.getItem('user_id')
 
   useEffect (()=> {
@@ -27,45 +28,51 @@ const Register = ({ navigate }) => {
   })
 
   const handleSubmit = async (event) => {
+
     event.preventDefault();
     console.log(`${name}, ${dob}, ${address}, ${group}, ${school}, ${relationship}, ${nokName}, ${nokRelationship}, ${nokNumber}`)
     console.log(showAge(dob))
 
-    const response = await fetch(`/users/${user_id}`, {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-        // 'Access-Control-Allow-Origin': '*',
-        // 'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept, Z-Key',
-        // 'Access-Control-Allow-Methods': 'GET, HEAD, POST, PUT, DELETE, OPTIONS, PATCH',
-        'Authorization': `Bearer ${token}`
-      },
-      body: JSON.stringify({ 
-        name: name, dob: dob, address: address, group: group, school: school, relationship: relationship, nokName: nokName, nokRelationship: nokRelationship, nokNumber: nokNumber 
-      })
-    })
+    if (/^\d{0,11}$/.test(nokNumber)) { // Only allow up to 11 digits
+      if (nokNumber.length === 11) { // Only update state if input is exactly 11 digits
 
-    let data = await response.json()
+        const response = await fetch(`/users/${user_id}`, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+            // 'Access-Control-Allow-Origin': '*',
+            // 'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept, Z-Key',
+            // 'Access-Control-Allow-Methods': 'GET, HEAD, POST, PUT, DELETE, OPTIONS, PATCH',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({ 
+            name: name, dob: dob, address: address, group: group, school: school, relationship: relationship, nokName: nokName, nokRelationship: nokRelationship, nokNumber: nokNumber 
+          })
+        })
 
-      if (response.status !== 201) {
-        console.log("child NOT added");
-    } else {
-        console.log("child added");
-        window.localStorage.setItem("token", data.token);
-        setToken(window.localStorage.getItem("token"));
-        setChildren(oldArray=>[...oldArray, data.child])
-        setName("")
-        setDob("")
-        setAddress("")
-        setGroup("")
-        setSchool("")
-        setRelationship("")
-        setNokName("")
-        setNokRelationship("")
-        setNokNumber("")
-        setRegistered(true)
-      }
-  }
+        let data = await response.json()
+
+          if (response.status !== 201) {
+            console.log("child NOT added");
+        } else {
+            console.log("child added");
+            window.localStorage.setItem("token", data.token);
+            setToken(window.localStorage.getItem("token"));
+            setChildren(oldArray=>[...oldArray, data.child])
+            setName("")
+            setDob("")
+            setAddress("")
+            setGroup("")
+            setSchool("")
+            setRelationship("")
+            setNokName("")
+            setNokRelationship("")
+            setNokNumber("")
+            setRegistered(true)
+          }
+    }
+    else{setNumberError('Phone number must be 11 digits')}
+  }}
 
   const hideConfirmation = () => {
     setRegistered(false)
@@ -119,6 +126,10 @@ const Register = ({ navigate }) => {
     setNokNumber(event.target.value)
   }
 
+  const handleError = (event) => {
+    setNumberError("")
+  }
+
   return (
     <>
       <body>
@@ -131,7 +142,7 @@ const Register = ({ navigate }) => {
           <input placeholder="Relationship To Child" id="relationship" type='text' value={ relationship } onChange={handleRelationshipChange}/>
           <input placeholder="Next Of Kin Name" id="nokName" type='text' value={ nokName } onChange={handleNokName}/>
           <input placeholder="Next Of Kin Relationship" id="nokRelationship" type='text' value={ nokRelationship } onChange={handleNokRelationship}/>
-          <input placeholder="Next Of Kin Number" id="nokNumber" type='text' pattern="^[0-9\b]+$" value={ nokNumber } onChange={handleNokNumber}/>
+          <input placeholder="Next Of Kin Number" id="nokNumber" type='text' pattern="^[0-9\b]+$" value={ nokNumber } onChange={handleNokNumber} onClick={handleError}/>
           <datalist id='groups'> 
           <option value="Shaz's U9s" />
           <option value="Michael's U10s" />
@@ -140,9 +151,9 @@ const Register = ({ navigate }) => {
           </datalist>
           <input id='submit' type="submit" value="Submit"/> 
         </form>
+        {numberError && <p> {numberError} </p>}
         {registered && <div>
           <a> Congratulations! Your child has been registered </a>
-          <button onClick={hideConfirmation}> Register another child </button>
           <button onClick={redirectHome}> Go to the homepage! </button>
         </div>}
         {user.child && <div>
