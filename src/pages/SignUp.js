@@ -6,24 +6,29 @@ const SignUpForm = ({ navigate }) => {
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [number, setNumber] = useState("");
+  const [numberError, setNumberError] = useState("");
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     console.log(`${name}, ${email}, ${password} ${number}`)
 
-    fetch('/users', {
-      method: 'post',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ email: email, password: password, name: name, number: number })
-    })
-    .then(response => {
-      if(response.status === 201) {
-        console.log(response.body)
-        navigate('/login')
-      }})
+    if (/^\d{0,11}$/.test(number)) { // Only allow up to 11 digits
+      if (number.length === 11) { // Only update state if input is exactly 11 digits
+        fetch('/users', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ email: email, password: password, name: name, number: number })
+        })
+        .then(response => {
+          if(response.status === 201) {
+            console.log(response.body)
+            navigate('/login')
+          }})
   }
+    else{setNumberError('Phone number must be 11 digits')}
+}}
 
   const handleEmailChange = (event) => {
     setEmail(event.target.value)
@@ -38,9 +43,12 @@ const SignUpForm = ({ navigate }) => {
   }
 
   const handleNumberChange = (event) => {
-    setNumber(event.target.value)
+    setNumber(event.target.value);
   }
 
+  const handleError = (event) => {
+    setNumberError("")
+  }
 
     return (
     <>
@@ -53,10 +61,11 @@ const SignUpForm = ({ navigate }) => {
           <form onSubmit={handleSubmit}>
           <input placeholder="Full Name" id="name" type='text' value={ name } onChange={handleNameChange}/>
           <input placeholder="Email" id="email" type='text' value={ email } onChange={handleEmailChange}/>
-          <input placeholder="Number" id="number" type='text' pattern="^[0-9\b]+$" value={ number } onChange={handleNumberChange}/>
+          <input placeholder="Number" id="number" type='text' pattern="^[0-9\b]+$" value={ number } onChange={handleNumberChange} onClick={handleError}/>
           <input placeholder="Password" id="password" type='password' value={ password } onChange={handlePasswordChange}/>
           <input id='submit' type="submit" value="Submit"/> 
           </form>
+          {numberError && <p> {numberError} </p>}
         </div>
       </body>  
     </>

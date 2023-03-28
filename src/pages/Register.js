@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 
-const Register = ({ navigate, token, setToken }) => {
+const Register = ({ navigate }) => {
 
+  const [token, setToken] = useState(window.localStorage.getItem("token"));
   const [name, setName] = useState("");
   const [dob, setDob] = useState("");
   const [address, setAddress] = useState("");
@@ -20,7 +21,7 @@ const Register = ({ navigate, token, setToken }) => {
     console.log(`${name}, ${dob}, ${address}, ${group}, ${school}, ${relationship}, ${nokName}, ${nokRelationship}, ${nokNumber}`)
     console.log(showAge(dob))
 
-    fetch(`/users/${user_id}`, {
+    const response = await fetch(`/users/${user_id}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -43,18 +44,17 @@ const Register = ({ navigate, token, setToken }) => {
         window.localStorage.setItem("token", data.token);
         setToken(window.localStorage.getItem("token"));
         setChildren(oldArray=>[...oldArray, data.child])
+        setName("")
+        setDob("")
+        setAddress("")
+        setGroup("")
+        setSchool("")
+        setRelationship("")
+        setNokName("")
+        setNokRelationship("")
+        setNokNumber("")
+        setRegistered(true)
       }
-
-    setName("")
-    setDob("")
-    setAddress("")
-    setGroup("")
-    setSchool("")
-    setRelationship("")
-    setNokName("")
-    setNokRelationship("")
-    setNokNumber("")
-    setRegistered(true)
   }
 
   const hideConfirmation = () => {
@@ -118,7 +118,7 @@ const Register = ({ navigate, token, setToken }) => {
           <input placeholder="Address" id="address" type='text' value={ address } onChange={handleAddressChange}/>
           <input placeholder="Group" id="group" type='text' list ='groups' value={ group } onChange={handleGroupChange}/>
           <input placeholder="School" id="school" type='text' value={ school } onChange={handleSchoolChange}/>
-          <input placeholder="Relationship to child" id="relationship" type='text' value={ relationship } onChange={handleRelationshipChange}/>
+          <input placeholder="Relationship To Child" id="relationship" type='text' value={ relationship } onChange={handleRelationshipChange}/>
           <input placeholder="Next Of Kin Name" id="nokName" type='text' value={ nokName } onChange={handleNokName}/>
           <input placeholder="Next Of Kin Relationship" id="nokRelationship" type='text' value={ nokRelationship } onChange={handleNokRelationship}/>
           <input placeholder="Next Of Kin Number" id="nokNumber" type='text' pattern="^[0-9\b]+$" value={ nokNumber } onChange={handleNokNumber}/>
