@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 const Register = ({ navigate }) => {
 
@@ -14,7 +14,17 @@ const Register = ({ navigate }) => {
   const [nokNumber, setNokNumber] = useState("");
   const [registered, setRegistered] = useState(false);
   const [children, setChildren] = useState([]);
+  const [user, setUser] = useState({});
   const user_id = window.localStorage.getItem('user_id')
+
+  useEffect (()=> {
+    const userInfo = async () => {
+      fetch('/users', {headers: {'User_ID': user_id}})
+      .then(response => response.json())
+      .then(res => setUser(res.user))
+    }
+    userInfo()
+  })
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -135,9 +145,12 @@ const Register = ({ navigate }) => {
           <button onClick={hideConfirmation}> Register another child </button>
           <button onClick={redirectHome}> Go to the homepage! </button>
         </div>}
-        <div>
+        {user.child && <div>
           <a> Your registered children: </a>
-        </div>
+          { user.child.map((child, index)=> {
+            return <a key={index}> {child.name} </a>
+          })}
+        </div>}
       </body> 
     </>
   )
