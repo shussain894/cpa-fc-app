@@ -6,25 +6,26 @@ const Register = ({ navigate, token, setToken }) => {
   const [dob, setDob] = useState("");
   const [address, setAddress] = useState("");
   const [group, setGroup] = useState("");
+  const [school, setSchool] = useState("");
   const [registered, setRegistered] = useState(false);
   const [children, setChildren] = useState([]);
   const user_id = window.localStorage.getItem('user_id')
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(`${name}, ${dob}, ${address}, ${group}`)
+    console.log(`${name}, ${dob}, ${address}, ${group}, ${school}`)
     console.log(showAge(dob))
 
     fetch(`/users/${user_id}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept, Z-Key',
-        'Access-Control-Allow-Methods': 'GET, HEAD, POST, PUT, DELETE, OPTIONS, PATCH',
+        // 'Access-Control-Allow-Origin': '*',
+        // 'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept, Z-Key',
+        // 'Access-Control-Allow-Methods': 'GET, HEAD, POST, PUT, DELETE, OPTIONS, PATCH',
         'Authorization': `Bearer ${token}`
       },
-      body: JSON.stringify({ name: name, dob: dob, address: address, group: group })
+      body: JSON.stringify({ name: name, dob: dob, address: address, group: group, school: school })
     })
 
     let data = await response.json()
@@ -42,6 +43,7 @@ const Register = ({ navigate, token, setToken }) => {
     setDob("")
     setAddress("")
     setGroup("")
+    setSchool("")
     setRegistered(true)
   }
 
@@ -77,6 +79,10 @@ const Register = ({ navigate, token, setToken }) => {
     setGroup(event.target.value)
   }
 
+  const handleSchoolChange = (event) => {
+    setSchool(event.target.value)
+  }
+
   return (
     <>
       <body>
@@ -85,6 +91,7 @@ const Register = ({ navigate, token, setToken }) => {
           <input placeholder="DOB" id="dob" type='date' value={ dob } onChange={handleDobChange}/>
           <input placeholder="Address" id="address" type='text' value={ address } onChange={handleAddressChange}/>
           <input placeholder="Group" id="group" type='text' list ='groups' value={ group } onChange={handleGroupChange}/>
+          <input placeholder="School" id="school" type='text' value={ school } onChange={handleSchoolChange}/>
           <datalist id='groups'> 
           <option value="Shaz's U9s" />
           <option value="Michael's U10s" />
