@@ -7,13 +7,17 @@ const Register = ({ navigate, token, setToken }) => {
   const [address, setAddress] = useState("");
   const [group, setGroup] = useState("");
   const [school, setSchool] = useState("");
+  const [relationship, setRelationship] = useState("");
+  const [nokName, setNokName] = useState("");
+  const [nokRelationship, setNokRelationship] = useState("");
+  const [nokNumber, setNokNumber] = useState("");
   const [registered, setRegistered] = useState(false);
   const [children, setChildren] = useState([]);
   const user_id = window.localStorage.getItem('user_id')
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(`${name}, ${dob}, ${address}, ${group}, ${school}`)
+    console.log(`${name}, ${dob}, ${address}, ${group}, ${school}, ${relationship}, ${nokName}, ${nokRelationship}, ${nokNumber}`)
     console.log(showAge(dob))
 
     fetch(`/users/${user_id}`, {
@@ -25,7 +29,9 @@ const Register = ({ navigate, token, setToken }) => {
         // 'Access-Control-Allow-Methods': 'GET, HEAD, POST, PUT, DELETE, OPTIONS, PATCH',
         'Authorization': `Bearer ${token}`
       },
-      body: JSON.stringify({ name: name, dob: dob, address: address, group: group, school: school })
+      body: JSON.stringify({ 
+        name: name, dob: dob, address: address, group: group, school: school, relationship: relationship, nokName: nokName, nokRelationship: nokRelationship, nokNumber: nokNumber 
+      })
     })
 
     let data = await response.json()
@@ -44,6 +50,10 @@ const Register = ({ navigate, token, setToken }) => {
     setAddress("")
     setGroup("")
     setSchool("")
+    setRelationship("")
+    setNokName("")
+    setNokRelationship("")
+    setNokNumber("")
     setRegistered(true)
   }
 
@@ -83,6 +93,22 @@ const Register = ({ navigate, token, setToken }) => {
     setSchool(event.target.value)
   }
 
+  const handleRelationshipChange = (event) => {
+    setRelationship(event.target.value)
+  }
+
+  const handleNokName = (event) => {
+    setNokName(event.target.value)
+  }
+
+  const handleNokRelationship = (event) => {
+    setNokRelationship(event.target.value)
+  }
+
+  const handleNokNumber = (event) => {
+    setNokNumber(event.target.value)
+  }
+
   return (
     <>
       <body>
@@ -92,6 +118,10 @@ const Register = ({ navigate, token, setToken }) => {
           <input placeholder="Address" id="address" type='text' value={ address } onChange={handleAddressChange}/>
           <input placeholder="Group" id="group" type='text' list ='groups' value={ group } onChange={handleGroupChange}/>
           <input placeholder="School" id="school" type='text' value={ school } onChange={handleSchoolChange}/>
+          <input placeholder="Relationship to child" id="relationship" type='text' value={ relationship } onChange={handleRelationshipChange}/>
+          <input placeholder="Next Of Kin Name" id="nokName" type='text' value={ nokName } onChange={handleNokName}/>
+          <input placeholder="Next Of Kin Relationship" id="nokRelationship" type='text' value={ nokRelationship } onChange={handleNokRelationship}/>
+          <input placeholder="Next Of Kin Number" id="nokNumber" type='text' pattern="^[0-9\b]+$" value={ nokNumber } onChange={handleNokNumber}/>
           <datalist id='groups'> 
           <option value="Shaz's U9s" />
           <option value="Michael's U10s" />
