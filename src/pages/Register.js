@@ -12,6 +12,9 @@ const Register = ({ navigate }) => {
   const [nokName, setNokName] = useState("");
   const [nokRelationship, setNokRelationship] = useState("");
   const [nokNumber, setNokNumber] = useState("");
+  const [doctor, setDoctor] = useState("");
+  const [surgery, setSurgery] = useState("");
+  const [doctorNumber, setDoctorNumber] = useState("");
   const [registered, setRegistered] = useState(false);
   const [children, setChildren] = useState([]);
   const [user, setUser] = useState({});
@@ -46,7 +49,7 @@ const Register = ({ navigate }) => {
             'Authorization': `Bearer ${token}`
           },
           body: JSON.stringify({ 
-            name: name, dob: dob, address: address, group: group, school: school, relationship: relationship, nokName: nokName, nokRelationship: nokRelationship, nokNumber: nokNumber 
+            name: name, dob: dob, address: address, group: group, school: school, relationship: relationship, nokName: nokName, nokRelationship: nokRelationship, nokNumber: nokNumber, doctor: doctor, doctorNumber: doctorNumber, surgery: surgery 
           })
         })
 
@@ -68,6 +71,9 @@ const Register = ({ navigate }) => {
             setNokName("")
             setNokRelationship("")
             setNokNumber("")
+            setDoctor("")
+            setSurgery("")
+            setDoctorNumber("")
             setRegistered(true)
           }
     }
@@ -126,6 +132,18 @@ const Register = ({ navigate }) => {
     setNokNumber(event.target.value)
   }
 
+  const handleDoctor = (event) => {
+    setDoctor(event.target.value)
+  }
+
+  const handleDoctorNumber = (event) => {
+    setDoctorNumber(event.target.value)
+  }
+
+  const handleSurgery = (event) => {
+    setSurgery(event.target.value)
+  }
+
   const handleError = (event) => {
     setNumberError("")
   }
@@ -138,17 +156,25 @@ const Register = ({ navigate }) => {
           <input placeholder="DOB" id="dob" type='date' value={ dob } onChange={handleDobChange}/>
           <input placeholder="Address" id="address" type='text' value={ address } onChange={handleAddressChange}/>
           <input placeholder="Group" id="group" type='text' list ='groups' value={ group } onChange={handleGroupChange}/>
+          <datalist id='groups'> 
+          <option value="Shaz's U9s" />
+          <option value="Faris's U9s" />
+          <option value="Michael's U10s" />
+          <option value="Suhail's U10s" />
+          <option value="Rob's U11s" />
+          <option value="Meer's U12s" />
+          <option value="Amjid's U12s" />
+          <option value="Pravin's U13s" />
+          <option value="No group" />
+          </datalist>
           <input placeholder="School" id="school" type='text' value={ school } onChange={handleSchoolChange}/>
           <input placeholder="Relationship To Child" id="relationship" type='text' value={ relationship } onChange={handleRelationshipChange}/>
           <input placeholder="Next Of Kin Name" id="nokName" type='text' value={ nokName } onChange={handleNokName}/>
           <input placeholder="Next Of Kin Relationship" id="nokRelationship" type='text' value={ nokRelationship } onChange={handleNokRelationship}/>
           <input placeholder="Next Of Kin Number" id="nokNumber" type='text' pattern="^[0-9\b]+$" value={ nokNumber } onChange={handleNokNumber} onClick={handleError}/>
-          <datalist id='groups'> 
-          <option value="Shaz's U9s" />
-          <option value="Michael's U10s" />
-          <option value="Shah's U10s" />
-          <option value="Rob's U12s" />
-          </datalist>
+          <input placeholder="Doctors Name" id="doctor" type='text' value={ doctor } onChange={handleDoctor}/>
+          <input placeholder="Surgery Name" id="surgery" type='text' value={ surgery } onChange={handleSurgery}/>
+          <input placeholder="Doctors Number" id="doctorNumber" type='text' value={ doctorNumber } onChange={handleDoctorNumber}/>
           <input id='submit' type="submit" value="Submit"/> 
         </form>
         {numberError && <p> {numberError} </p>}
