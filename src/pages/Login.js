@@ -11,7 +11,7 @@ const LoginForm = ({ navigate }) => {
     event.preventDefault();
     console.log(`${email}, ${password}`)
 
-    let response = await fetch('http://localhost:4000/tokens', {
+    let response = await fetch('/tokens', {
       method: 'post',
       headers: {
         'Content-Type': 'application/json',
@@ -32,7 +32,7 @@ const LoginForm = ({ navigate }) => {
       let data = await response.json()
       window.localStorage.setItem("token", data.token)
       window.localStorage.setItem("user_id", data.user_id)
-      navigate('/home');
+      navigate('/register');
     }
   }
 
