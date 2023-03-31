@@ -33,8 +33,8 @@ const Register = ({ navigate }) => {
     console.log(`${name}, ${dob}, ${address}, ${group}, ${school}, ${relationship}, ${nokName}, ${nokRelationship}, ${nokNumber}`)
     console.log(showAge(dob))
 
-    if (/^\d{0,11}$/.test(nokNumber)) { // Only allow up to 11 digits
-      if (nokNumber.length === 11) { // Only update state if input is exactly 11 digits
+    if (/^\d{0,11}$/.test(nokNumber)) { 
+      if (nokNumber.length === 11) { 
 
         const response = await fetch(`/users/${user_id}`, {
           method: 'PATCH',
