@@ -8,6 +8,10 @@ const SignUpForm = ({ navigate }) => {
   const [name, setName] = useState("");
   const [number, setNumber] = useState("");
   const [numberError, setNumberError] = useState("");
+  const [UserExistsErrorMessage, setUserExistsErrorMessage] = useState('');
+  const [EmptyFieldErrorMessage, setEmptyFieldErrorMessage] = useState('')
+  const [GeneralErrorMessage, setGeneralErrorMessage] = useState('')
+
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -26,7 +30,21 @@ const SignUpForm = ({ navigate }) => {
           if(response.status === 201) {
             console.log(response.body)
             navigate('/login')
-          }})
+          } else if (email === '' || password === '' || name === '' || title === '' || number === '') {
+            console.log(response.body)
+            setEmptyFieldErrorMessage('All fields are required - please try again')
+  
+          } else if (response.status === 400){
+            console.log(response.body)
+            navigate('/');
+            setUserExistsErrorMessage('That user already exists - Please create a new account or login');
+            console.log(response.json().error)
+          } else {
+            console.log(response)
+            navigate('/');
+            setGeneralErrorMessage("Oops that didn't work. Please try again")
+          }
+        })
   }
     else{setNumberError('Phone number must be 11 digits')}
 }}
@@ -53,6 +71,9 @@ const SignUpForm = ({ navigate }) => {
 
   const handleError = (event) => {
     setNumberError("")
+    setGeneralErrorMessage('')
+    setUserExistsErrorMessage('')
+    setEmptyFieldErrorMessage('')
   }
 
     return (
@@ -64,20 +85,25 @@ const SignUpForm = ({ navigate }) => {
           <a href="../login">login here</a>
          
           <form onSubmit={handleSubmit}>
-          <input placeholder="Title" id="title" type='text' list='titles' value={ title } onChange={handleTitleChange}/>
+          <input placeholder="Title" id="title" type='text' list='titles' value={ title } onChange={handleTitleChange} onClick={handleError}/>
           <datalist id='titles'> 
           <option value="Mr" />
           <option value="Mrs" />
           <option value="Miss" />
           <option value="Ms" />
           </datalist>
-          <input placeholder="Full Name" id="name" type='text' value={ name } onChange={handleNameChange}/>
-          <input placeholder="Email" id="email" type='text' value={ email } onChange={handleEmailChange}/>
+          <input placeholder="Full Name" id="name" type='text' value={ name } onChange={handleNameChange} onClick={handleError}/>
+          <input placeholder="Email" id="email" type='text' value={ email } onChange={handleEmailChange} onClick={handleError}/>
           <input placeholder="Number" id="number" type='text' pattern="^[0-9\b]+$" value={ number } onChange={handleNumberChange} onClick={handleError}/>
           <input placeholder="Password" id="password" type='password' value={ password } onChange={handlePasswordChange}/>
           <input id='submit' type="submit" value="Submit"/> 
           </form>
-          {numberError && <p> {numberError} </p>}
+          <div className='errorMessages'>
+            {UserExistsErrorMessage && (<p className="error"> {UserExistsErrorMessage} </p>)}
+            {EmptyFieldErrorMessage && (<p className="error"> {EmptyFieldErrorMessage} </p>)}
+            {GeneralErrorMessage && (<p className="error"> {GeneralErrorMessage} </p>)}
+            {numberError && <p> {numberError} </p>}
+          </div>
         </div>
       </body>  
     </>
