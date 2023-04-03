@@ -4,13 +4,14 @@ const SignUpForm = ({ navigate }) => {
   
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [title, setTitle] = useState("");
   const [name, setName] = useState("");
   const [number, setNumber] = useState("");
   const [numberError, setNumberError] = useState("");
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(`${name}, ${email}, ${password} ${number}`)
+    console.log(`${title} ${name}, ${email}, ${password} ${number}`)
 
     if (/^\d{0,11}$/.test(number)) { // Only allow up to 11 digits
       if (number.length === 11) { // Only update state if input is exactly 11 digits
@@ -19,7 +20,7 @@ const SignUpForm = ({ navigate }) => {
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ email: email, password: password, name: name, number: number })
+          body: JSON.stringify({ email: email, password: password, name: name, number: number, title: title})
         })
         .then(response => {
           if(response.status === 201) {
@@ -32,6 +33,10 @@ const SignUpForm = ({ navigate }) => {
 
   const handleEmailChange = (event) => {
     setEmail(event.target.value)
+  }
+
+  const handleTitleChange = (event) => {
+    setTitle(event.target.value)
   }
 
   const handleNameChange = (event) => {
@@ -59,6 +64,13 @@ const SignUpForm = ({ navigate }) => {
           <a href="../login">login here</a>
          
           <form onSubmit={handleSubmit}>
+          <input placeholder="Title" id="title" type='text' list='titles' value={ title } onChange={handleTitleChange}/>
+          <datalist id='titles'> 
+          <option value="Mr" />
+          <option value="Mrs" />
+          <option value="Miss" />
+          <option value="Ms" />
+          </datalist>
           <input placeholder="Full Name" id="name" type='text' value={ name } onChange={handleNameChange}/>
           <input placeholder="Email" id="email" type='text' value={ email } onChange={handleEmailChange}/>
           <input placeholder="Number" id="number" type='text' pattern="^[0-9\b]+$" value={ number } onChange={handleNumberChange} onClick={handleError}/>

@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 const Register = ({ navigate }) => {
 
   const [token, setToken] = useState(window.localStorage.getItem("token"));
+  const [title, setTitle] = useState("");
   const [name, setName] = useState("");
   const [dob, setDob] = useState("");
   const [address, setAddress] = useState("");
@@ -49,7 +50,7 @@ const Register = ({ navigate }) => {
             'Authorization': `Bearer ${token}`
           },
           body: JSON.stringify({ 
-            name: name, dob: dob, address: address, group: group, school: school, relationship: relationship, nokName: nokName, nokRelationship: nokRelationship, nokNumber: nokNumber, doctor: doctor, doctorNumber: doctorNumber, surgery: surgery 
+            name: name, dob: dob, address: address, group: group, school: school, relationship: relationship, nokName: nokName, nokRelationship: nokRelationship, nokNumber: nokNumber, doctor: doctor, doctorNumber: doctorNumber, surgery: surgery
           })
         })
 
