@@ -56,9 +56,9 @@ const Register = ({ navigate }) => {
 
         let data = await response.json()
 
-          if (response.status !== 201) {
+          if (response.status !== 201) { // amend to add error messages
             console.log("child NOT added");
-        } else {
+        } else { // should be === 201 
             console.log("child added");
             window.localStorage.setItem("token", data.token);
             setToken(window.localStorage.getItem("token"));
