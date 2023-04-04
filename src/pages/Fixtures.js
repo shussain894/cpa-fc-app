@@ -63,9 +63,13 @@ const Fixtures = ({ navigate }) => {
             <input placeholder="Group" id="group" type='text' list ='groups' value={ group } onChange={handleGroupChange}/>
               <datalist id='groups'> 
               <option value="Shaz's U9s" />
+              <option value="Faris's U9s" />
               <option value="Michael's U10s" />
-              <option value="Shah's U10s" />
-              <option value="Rob's U12s" />
+              <option value="Suhail's U10s" />
+              <option value="Rob's U11s" />
+              <option value="Meer's U12s" />
+              <option value="Amjid's U12s" />
+              <option value="Pravin's U13s" />
               </datalist>
             <input placeholder="Opponent" id="opponent" type='text' value={ opponent } onChange={handleOpponentChange}/>
             <input placeholder="Venue" id="venue" type='text' value={ venue } onChange={handleVenueChange}/>
@@ -75,7 +79,7 @@ const Fixtures = ({ navigate }) => {
         </div>
         <div>
         <span style={{ fontWeight: 'bold' }}>Your next fixture:</span>
-          <p> Group: </p>
+          <p> Team: </p>
           <p> Opponent: </p>
           <p> Venue: </p>
           <p> Date: </p>
