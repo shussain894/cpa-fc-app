@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 const Fixtures = ({ navigate }) => {
 
-  const [token, setToken] = useState(window.localStorage.getItem("token"));
+  // const [token, setToken] = useState(window.localStorage.getItem("token"));
   const [group, setGroup] = useState("");
   const [opponent, setOpponent] = useState("");
   const [venue, setVenue] = useState("");
@@ -17,14 +17,15 @@ const Fixtures = ({ navigate }) => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        // 'Authorization': `Bearer ${token}`
       },
       body: JSON.stringify({ group: group, opponent: opponent, venue: venue, date: date, time: time })
     })
     .then(response => {
       if(response.status === 201) {
         console.log('fixture added')
-        window.localStorage.setItem("token", data.token);
-        setToken(window.localStorage.getItem("token"));
+        // window.localStorage.setItem("token", data.token);
+        // setToken(window.localStorage.getItem("token"));
         setGroup("")
         setOpponent("")
         setVenue("")
