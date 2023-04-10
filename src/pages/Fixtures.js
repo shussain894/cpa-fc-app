@@ -2,18 +2,38 @@ import React, { useState } from 'react';
 
 const Fixtures = ({ navigate }) => {
 
+  const [token, setToken] = useState(window.localStorage.getItem("token"));
   const [group, setGroup] = useState("");
   const [opponent, setOpponent] = useState("");
   const [venue, setVenue] = useState("");
   const [date, setDate] = useState("");
+  const [time, setTime] = useState("")
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(`${opponent}, ${venue}, ${date}`)
-    setGroup("")
-    setOpponent("")
-    setVenue("")
-    setDate("")
+    console.log(`${opponent}, ${venue}, ${date}, ${group}, ${time}`)
+
+    fetch('/fixtures', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ group: group, opponent: opponent, venue: venue, date: date, time: time })
+    })
+    .then(response => {
+      if(response.status === 201) {
+        console.log('fixture added')
+        window.localStorage.setItem("token", data.token);
+        setToken(window.localStorage.getItem("token"));
+        setGroup("")
+        setOpponent("")
+        setVenue("")
+        setDate("")
+        setTime("")
+      } else {
+        console.log('fixture NOT added')
+      }
+    })
   }
 
   const Checkbox = ({ label, checked }) => {
@@ -52,6 +72,10 @@ const Fixtures = ({ navigate }) => {
     setDate(event.target.value)
   }
 
+   const handleTimeChange = (event) => {
+    setTime(event.target.value)
+  }
+
   return (
     <>
       <body>
@@ -74,6 +98,7 @@ const Fixtures = ({ navigate }) => {
             <input placeholder="Opponent" id="opponent" type='text' value={ opponent } onChange={handleOpponentChange}/>
             <input placeholder="Venue" id="venue" type='text' value={ venue } onChange={handleVenueChange}/>
             <input placeholder="Date" id="date" type='date' value={ date } onChange={handleDateChange}/>
+            <input placeholder="Time" id="time" type='time' value={ time } onChange={handleTimeChange}/>
             <input id='submit' type="submit" value="Submit"/> 
           </form>
         </div>
