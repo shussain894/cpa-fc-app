@@ -1,13 +1,25 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 const Fixtures = ({ navigate }) => {
-
-  // const [token, setToken] = useState(window.localStorage.getItem("token"));
+  const [fixtures, setFixtures] = useState("")
+  const [token, setToken] = useState(window.localStorage.getItem("token"));
   const [group, setGroup] = useState("");
   const [opponent, setOpponent] = useState("");
   const [venue, setVenue] = useState("");
   const [date, setDate] = useState("");
-  const [time, setTime] = useState("")
+  const [time, setTime] = useState("");
+
+  useEffect(() => {
+    fetch('/fixtures', {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      }
+    })
+    .then(response => {
+      console.log(response)
+    })
+  }, [token])
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -17,15 +29,15 @@ const Fixtures = ({ navigate }) => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        // 'Authorization': `Bearer ${token}`
+        'Authorization': `Bearer ${token}`
       },
       body: JSON.stringify({ group: group, opponent: opponent, venue: venue, date: date, time: time })
     })
     .then(response => {
       if(response.status === 201) {
         console.log('fixture added')
-        // window.localStorage.setItem("token", data.token);
-        // setToken(window.localStorage.getItem("token"));
+        window.localStorage.setItem("token", data.token);
+        setToken(window.localStorage.getItem("token"));
         setGroup("")
         setOpponent("")
         setVenue("")
@@ -33,6 +45,7 @@ const Fixtures = ({ navigate }) => {
         setTime("")
       } else {
         console.log('fixture NOT added')
+        console.log(window.localStorage.getItem("token"));
       }
     })
   }
