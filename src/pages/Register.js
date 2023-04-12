@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 const Register = ({ navigate }) => {
 
   const [token, setToken] = useState(window.localStorage.getItem("token"));
-  const [title, setTitle] = useState("");
   const [name, setName] = useState("");
   const [dob, setDob] = useState("");
   const [address, setAddress] = useState("");
@@ -29,7 +28,7 @@ const Register = ({ navigate }) => {
       .then(res => setUser(res.user))
     }
     userInfo()
-  })
+  },[])
 
   const handleSubmit = async (event) => {
 
@@ -157,7 +156,10 @@ const Register = ({ navigate }) => {
           <input placeholder="DOB" id="dob" type='date' value={ dob } onChange={handleDobChange}/>
           <input placeholder="Address" id="address" type='text' value={ address } onChange={handleAddressChange}/>
           <input placeholder="Group" id="group" type='text' list ='groups' value={ group } onChange={handleGroupChange}/>
-          <datalist id='groups'> 
+          { 
+            // create a dropdown for the below list
+          }
+          <datalist id='groups'>
           <option value="Shaz's U9s" />
           <option value="Faris's U9s" />
           <option value="Michael's U10s" />

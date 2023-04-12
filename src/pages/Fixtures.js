@@ -9,17 +9,17 @@ const Fixtures = ({ navigate }) => {
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
 
-  useEffect(() => {
-    fetch('/fixtures', {
-      method: 'GET',
-      headers: {
-        'Authorization': `Bearer ${token}`,
-      }
-    })
-    .then(response => {
-      console.log(response)
-    })
-  }, [token])
+  // useEffect(() => {
+  //   fetch('/fixtures', {
+  //     method: 'GET',
+  //     headers: {
+  //       'Authorization': `Bearer ${token}`,
+  //     }
+  //   })
+  //   .then(response => {
+  //     console.log(response)
+  //   })
+  // }, [token])
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -36,8 +36,8 @@ const Fixtures = ({ navigate }) => {
     .then(response => {
       if(response.status === 201) {
         console.log('fixture added')
-        window.localStorage.setItem("token", data.token);
-        setToken(window.localStorage.getItem("token"));
+        // window.localStorage.setItem("token", data.token);
+        // setToken(window.localStorage.getItem("token"));
         setGroup("")
         setOpponent("")
         setVenue("")
