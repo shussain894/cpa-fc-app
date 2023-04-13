@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import GroupDropdown from './GroupDropdown';
 
 const Register = ({ navigate }) => {
 
@@ -155,10 +156,7 @@ const Register = ({ navigate }) => {
           <input placeholder="Name" id="name" type='text' value={ name } onChange={handleNameChange}/>
           <input placeholder="DOB" id="dob" type='date' value={ dob } onChange={handleDobChange}/>
           <input placeholder="Address" id="address" type='text' value={ address } onChange={handleAddressChange}/>
-          <input placeholder="Group" id="group" type='text' list ='groups' value={ group } onChange={handleGroupChange}/>
-          { 
-            // create a dropdown for the below list
-          }
+          {/* <input placeholder="Group" id="group" type='text' list ='groups' value={ group } onChange={handleGroupChange}/>
           <datalist id='groups'>
           <option value="Shaz's U9s" />
           <option value="Faris's U9s" />
@@ -169,7 +167,8 @@ const Register = ({ navigate }) => {
           <option value="Amjid's U12s" />
           <option value="Pravin's U13s" />
           <option value="No group" />
-          </datalist>
+          </datalist> */}
+          <GroupDropdown handleGroupChange={handleGroupChange} />
           <input placeholder="School" id="school" type='text' value={ school } onChange={handleSchoolChange}/>
           <input placeholder="Relationship To Child" id="relationship" type='text' value={ relationship } onChange={handleRelationshipChange}/>
           <input placeholder="Next Of Kin Name" id="nokName" type='text' value={ nokName } onChange={handleNokName}/>

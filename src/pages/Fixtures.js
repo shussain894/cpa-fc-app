@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import GroupDropdown from './GroupDropdown';
 
 const Fixtures = ({ navigate }) => {
   const [fixtures, setFixtures] = useState("")
@@ -98,7 +99,7 @@ const Fixtures = ({ navigate }) => {
          
           <form onSubmit={handleSubmit}>
             <h3> Add a new fixture! </h3>
-            <input placeholder="Group" id="group" type='text' list ='groups' value={ group } onChange={handleGroupChange}/>
+            {/* <input placeholder="Group" id="group" type='text' list ='groups' value={ group } onChange={handleGroupChange}/>
               <datalist id='groups'> 
               <option value="Shaz's U9s" />
               <option value="Faris's U9s" />
@@ -108,7 +109,11 @@ const Fixtures = ({ navigate }) => {
               <option value="Meer's U12s" />
               <option value="Amjid's U12s" />
               <option value="Pravin's U13s" />
-              </datalist>
+              </datalist> */}
+            <GroupDropdown handleGroupChange={handleGroupChange} />
+            {
+              // group dropdown works fine but doesnt set back to empty after
+            }
             <input placeholder="Opponent" id="opponent" type='text' value={ opponent } onChange={handleOpponentChange}/>
             <input placeholder="Venue" id="venue" type='text' value={ venue } onChange={handleVenueChange}/>
             <input placeholder="Date" id="date" type='date' value={ date } onChange={handleDateChange}/>
