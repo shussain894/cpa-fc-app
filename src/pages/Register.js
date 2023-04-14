@@ -20,6 +20,8 @@ const Register = ({ navigate }) => {
   const [children, setChildren] = useState([]);
   const [user, setUser] = useState({});
   const [numberError, setNumberError] = useState("");
+  const [EmptyFieldErrorMessage, setEmptyFieldErrorMessage] = useState('')
+  const [GeneralErrorMessage, setGeneralErrorMessage] = useState('')
   const user_id = window.localStorage.getItem('user_id')
 
   useEffect (()=> {
@@ -56,12 +58,17 @@ const Register = ({ navigate }) => {
 
         let data = await response.json()
 
-          if (response.status !== 201) { // amend to add error messages
-            console.log("child NOT added");
-        } else { // should be === 201 
-            console.log("child added");
-            window.localStorage.setItem("token", data.token);
-            setToken(window.localStorage.getItem("token"));
+          if (name === '' || dob === '' || address === '' || group === '' || nokName === '' || nokNumber === '' || school === '' || 
+          relationship === '' || nokRelationship === '' || doctor === '' || doctorNumber === '' || surgery === ''){
+            console.log('empty field')
+            navigate('/register')
+            setEmptyFieldErrorMessage('Please enter all fields')
+          } else if (response.status !== 201) {
+            console.log('oops, child NOT added')
+            setGeneralErrorMessage("Oops that didn't work. Please try again")
+            navigate('/register')
+          } else{
+            console.log('child added!')
             setChildren(oldArray=>[...oldArray, data.child])
             setName("")
             setDob("")
@@ -77,6 +84,27 @@ const Register = ({ navigate }) => {
             setDoctorNumber("")
             setRegistered(true)
           }
+        //   if (response.status !== 201) { // amend to add error messages
+        //     console.log("child NOT added");
+        // } else { // should be === 201 
+        //     console.log("child added");
+        //     window.localStorage.setItem("token", data.token);
+        //     setToken(window.localStorage.getItem("token"));
+        //     setChildren(oldArray=>[...oldArray, data.child])
+        //     setName("")
+        //     setDob("")
+        //     setAddress("")
+        //     setGroup("")
+        //     setSchool("")
+        //     setRelationship("")
+        //     setNokName("")
+        //     setNokRelationship("")
+        //     setNokNumber("")
+        //     setDoctor("")
+        //     setSurgery("")
+        //     setDoctorNumber("")
+        //     setRegistered(true)
+        //   }
     }
     else{setNumberError('Phone number must be 11 digits')}
   }}
@@ -147,15 +175,17 @@ const Register = ({ navigate }) => {
 
   const handleError = (event) => {
     setNumberError("")
+    setGeneralErrorMessage('')
+    setEmptyFieldErrorMessage('')
   }
 
   return (
     <>
       <body>
         <form onSubmit={handleSubmit}>
-          <input placeholder="Name" id="name" type='text' value={ name } onChange={handleNameChange}/>
-          <input placeholder="DOB" id="dob" type='date' value={ dob } onChange={handleDobChange}/>
-          <input placeholder="Address" id="address" type='text' value={ address } onChange={handleAddressChange}/>
+          <input placeholder="Name" id="name" type='text' value={ name } onChange={handleNameChange} onClick={handleError}/>
+          <input placeholder="DOB" id="dob" type='date' value={ dob } onChange={handleDobChange} onClick={handleError}/>
+          <input placeholder="Address" id="address" type='text' value={ address } onChange={handleAddressChange} onClick={handleError}/>
           {/* <input placeholder="Group" id="group" type='text' list ='groups' value={ group } onChange={handleGroupChange}/>
           <datalist id='groups'>
           <option value="Shaz's U9s" />
@@ -168,18 +198,22 @@ const Register = ({ navigate }) => {
           <option value="Pravin's U13s" />
           <option value="No group" />
           </datalist> */}
-          <GroupDropdown handleGroupChange={handleGroupChange} />
-          <input placeholder="School" id="school" type='text' value={ school } onChange={handleSchoolChange}/>
-          <input placeholder="Relationship To Child" id="relationship" type='text' value={ relationship } onChange={handleRelationshipChange}/>
-          <input placeholder="Next Of Kin Name" id="nokName" type='text' value={ nokName } onChange={handleNokName}/>
-          <input placeholder="Next Of Kin Relationship" id="nokRelationship" type='text' value={ nokRelationship } onChange={handleNokRelationship}/>
+          <GroupDropdown onChange={handleGroupChange} onClick={handleError} />
+          <input placeholder="School" id="school" type='text' value={ school } onChange={handleSchoolChange} onClick={handleError}/>
+          <input placeholder="Relationship To Child" id="relationship" type='text' value={ relationship } onChange={handleRelationshipChange} onClick={handleError}/>
+          <input placeholder="Next Of Kin Name" id="nokName" type='text' value={ nokName } onChange={handleNokName} onClick={handleError}/>
+          <input placeholder="Next Of Kin Relationship" id="nokRelationship" type='text' value={ nokRelationship } onChange={handleNokRelationship} onClick={handleError}/>
           <input placeholder="Next Of Kin Number" id="nokNumber" type='text' pattern="^[0-9\b]+$" value={ nokNumber } onChange={handleNokNumber} onClick={handleError}/>
-          <input placeholder="Doctors Name" id="doctor" type='text' value={ doctor } onChange={handleDoctor}/>
-          <input placeholder="Surgery Name" id="surgery" type='text' value={ surgery } onChange={handleSurgery}/>
-          <input placeholder="Doctors Number" id="doctorNumber" type='text' value={ doctorNumber } onChange={handleDoctorNumber}/>
+          <input placeholder="Doctors Name" id="doctor" type='text' value={ doctor } onChange={handleDoctor} onClick={handleError}/>
+          <input placeholder="Surgery Name" id="surgery" type='text' value={ surgery } onChange={handleSurgery} onClick={handleError}/>
+          <input placeholder="Doctors Number" id="doctorNumber" type='text' value={ doctorNumber } onChange={handleDoctorNumber} onClick={handleError}/>
           <input id='submit' type="submit" value="Submit"/> 
         </form>
-        {numberError && <p> {numberError} </p>}
+        <div className='errorMessages'>
+          {EmptyFieldErrorMessage && (<p className="error"> {EmptyFieldErrorMessage} </p>)}
+          {GeneralErrorMessage && (<p className="error"> {GeneralErrorMessage} </p>)}
+          {numberError && <p> {numberError} </p>}
+        </div>
         {registered && <div>
           <a> Congratulations! Your child has been registered </a>
           <button onClick={redirectHome}> Go to the homepage! </button>
