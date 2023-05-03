@@ -4,7 +4,7 @@ const LoginForm = ({ navigate }) => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [UserDoesntExistsErrorMessage, setUserDoesntExistsErrorMessage] = useState('');
+  const [UserDoesntExistsErrorMessage, setUserDoesntExistsErrorMessage] = useState(''); // add error handling to html below
   const [EmptyFieldErrorMessage, setEmptyFieldErrorMessage] = useState('')
 
   const handleSubmit = async (event) => {
