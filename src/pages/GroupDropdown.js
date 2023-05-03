@@ -1,6 +1,5 @@
 import React from 'react';
 
-
 const GroupDropdown = ({ handleGroupChange }) => {
   // Array of options
   const options = [
