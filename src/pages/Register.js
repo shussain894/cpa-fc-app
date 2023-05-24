@@ -36,7 +36,7 @@ const Register = ({ navigate }) => {
   const handleSubmit = async (event) => {
 
     event.preventDefault();
-    console.log(`${name}, ${dob}, ${address}, ${group}, ${school}, ${relationship}, ${nokName}, ${nokRelationship}, ${nokNumber}`)
+    console.log(`${name}, ${dob}, ${address}, ${group}, ${school}, ${relationship}, ${nokName}, ${nokRelationship}`)
     console.log(showAge(dob))
 
     if (/^\d{0,11}$/.test(nokNumber)) { 
