@@ -3,14 +3,13 @@ import React from 'react';
 const GroupDropdown = ({ handleGroupChange }) => {
   // Array of options
   const options = [
-    "Shaz's U9s",
-    "Faris's U9s",
-    "Michael's U10s",
-    "Suhail's U10s",
-    "Rob's U11s",
-    "Meer's U12s",
-    "Abdi's U12s",
-    "Pravin's U13s",
+    "Shaz's U10s",
+    "Faris's U10s",
+    "Michael's U11s",
+    "Suhail's U11s",
+    "Rob's U12s",
+    "Meer's U13s",
+    "Abdi's U13s",
     "No group",
   ];
 
