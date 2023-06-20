@@ -8,6 +8,7 @@ const GroupDropdown = ({ handleGroupChange }) => {
     "Michael's U11s",
     "Suhail's U11s",
     "Rob's U12s",
+    "Nathan's U12s",
     "Meer's U13s",
     "Abdi's U13s",
     "No group",
