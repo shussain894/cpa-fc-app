@@ -1,7 +1,7 @@
 import React from 'react';
 
 const GroupDropdown = ({ handleGroupChange }) => {
-  // Array of options
+  //  Array of options
   const options = [
     "Shaz's U10s",
     "Faris's U10s",
